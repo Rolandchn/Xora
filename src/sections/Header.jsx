@@ -8,8 +8,6 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
     
-    let documentOverflowY = document.body.style.overflowY;
-
     useEffect(() => {
         const handleScroll = () => {
             setHasScrolled(window.scrollY >= 32);
@@ -23,11 +21,11 @@ const Header = () => {
     }, [])
 
     window.onresize = () => {
-        window.outerWidth > 1024 && (setIsOpen(false), documentOverflowY = 'auto');
+        window.outerWidth > 1024 && (setIsOpen(false), document.body.style.overflowY = 'auto');
     }
 
     const NavLink = ({title}) => (
-        <LinkScroll className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5' onClick={() => {setIsOpen(false); documentOverflowY = 'auto';
+        <LinkScroll className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5' onClick={() => {setIsOpen(false); document.body.style.overflowY = 'auto';
         }} to={title} offset={-100} spy smooth activeClass='nav-active'>
             {title}
         </LinkScroll>
@@ -55,7 +53,7 @@ const Header = () => {
                             </li>
 
                             <li className='nav-logo'>
-                                <LinkScroll className={clsx('max-lg:hidden transition-transform duration-500 cursor-pointer')} to="hero" offset={-250} spy smooth >
+                                <LinkScroll className='max-lg:hidden transition-transform duration-500 cursor-pointer' onClick={() => {setIsOpen(false); document.body.style.overflowY = 'auto';}} to="hero" offset={-250} spy smooth >
                                     <img src="/images/xora.svg" alt="logo" width={160} height={55}/>
                                 </LinkScroll>
                             </li>
@@ -91,12 +89,12 @@ const Header = () => {
               if(isOpen){
                 setIsOpen(false);
 
-                documentOverflowY = 'auto';
+                document.body.style.overflowY = 'auto';
               }
               else{
                 setIsOpen(true);
 
-                documentOverflowY = 'hidden';
+                document.body.style.overflowY = 'hidden';
               }
             }}>
                 <img className='size-1/2 object-contain' src={`/images/${isOpen ? "close" : "magic"}.svg`} alt="magic" />
